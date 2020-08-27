@@ -20,7 +20,7 @@ class AWS():
             self.regions.append(response["Regions"][i]["RegionName"])
         
 class EC2(AWS):
-    
+   
     def __init__(self):
         pass
     
@@ -29,7 +29,7 @@ class EC2(AWS):
         return response
     
 class Instances():
-        
+    
     def __init__(self,name,instanceID,state,privateIP,publicIP,AMI):
         self.name = name
         self.instanceID = instanceID
@@ -41,13 +41,9 @@ class Instances():
 def printInstances(client,region):
     
     response = EC2.describeInstances(client)
-    
     myInstances = []
-    
     for i in range(len(response["Reservations"])):
-        
         temp = response["Reservations"][i]["Instances"][0]
-        
         try:
             tags = temp["Tags"]
             for i in range(len(tags)):
@@ -55,25 +51,18 @@ def printInstances(client,region):
                     name = tags[i]["Value"]        
         except:
             name = "-"
-         
         instanceID = temp["InstanceId"]
         state = temp["State"]["Name"]
         privateIP = temp["PrivateIpAddress"]
-        
         try:
             publicIP = temp["PublicIpAddress"]
         except:
             publicIP = "-"
-        
         AMI = temp["ImageId"]
-        
         myInstances.append(Instances(name,instanceID,state,privateIP,publicIP,AMI))
-        
     if(len(myInstances)==0):
         return
-    
     print ("\n{:-^114}\n".format(region))
-        
     for i in range(len(myInstances)):
         print ("{:30} {:20} {:8} {:15} {:15} {:20}".format(
                 myInstances[i].name,
@@ -84,18 +73,15 @@ def printInstances(client,region):
                 myInstances[i].AMI,
                 )
         )
-    
     return
     
 def main():
-            
+    
     client = AWS("ec2","eu-west-1")
     client.Regions()
-    
     for i in range(len(AWS.regions)):
         client = AWS("ec2",AWS.regions[i])
         printInstances(client,AWS.regions[i])
     
 if __name__ == "__main__":
-    
     main()
