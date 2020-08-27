@@ -1,5 +1,8 @@
 # aws-scripts
-scripts for working with aws resources
+Scripts for working with aws resources. The user will be able to run these scripts in one of the following environments:
+- Local machine (AWS IAM User credentials set up accordingly)
+- EC2 Instance (IAM Role with relevant permissions)
+- AWS Lambda (Will need to make changes to scripts accordingly along with IAM role relevant permissions)
 
 ### EC2Instances.py
 
