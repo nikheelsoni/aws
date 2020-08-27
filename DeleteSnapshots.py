@@ -77,6 +77,6 @@ if __name__ == '__main__':
             if(response == "2"):
                 deleteSnapshots(page_iterator,age)
         except ValueError:
-            print ("Invalid value. Please try again. Please try again")
+            print ("Invalid value. Please try again")
             
         
